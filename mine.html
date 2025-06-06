@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Galaxy of Love 💖</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      font-family: 'Great Vibes', cursive;
+      overflow: hidden;
+      background: radial-gradient(circle at 30% 30%, #1a002e, #000010 70%);
+      animation: galaxy 15s infinite alternate;
+      color: white;
+    }
+
+    @keyframes galaxy {
+      0% {
+        background-position: 0% 50%;
+        background: radial-gradient(circle at 30% 30%, #1a002e, #000010 70%);
+      }
+      100% {
+        background-position: 100% 50%;
+        background: radial-gradient(circle at 70% 70%, #330033, #000010 70%);
+      }
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      color: #ff66cc;
+      text-shadow: 0 0 5px #ff99cc, 0 0 10px #ff66cc;
+      animation: float 10s infinite ease-in-out;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .heart:hover {
+      transform: scale(1.6);
+      text-shadow: 0 0 10px #ff80bf, 0 0 20px #ff3399;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(-30px) rotate(10deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8;
+      }
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: #fff0f5;
+      color: #b30059;
+      padding: 30px;
+      border-radius: 20px;
+      font-size: 1.5rem;
+      text-align: center;
+      width: 80%;
+      max-width: 420px;
+      box-shadow: 0 0 30px #ff66cc;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s ease;
+      z-index: 10;
+    }
+
+    .popup.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 5;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    .close-btn {
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 1rem;
+      background: #ff3399;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: sans-serif;
+    }
+
+    .instruction {
+      position: absolute;
+      top: 15px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.4rem;
+      color: #ffcce6;
+      text-shadow: 0 0 12px #ff80bf;
+      animation: fadeIn 3s ease forwards;
+      z-index: 2;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="instruction">💖 Click a floating heart to reveal a love note 💖</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="popup" id="popup">
+  <div id="popupText">Loading love...</div>
+  <button class="close-btn" onclick="closePopup()">Close</button>
+</div>
+
+<script>
+  const messages = [
+    "You're my favorite place to be. 🫶",
+    "Even galaxies aren’t as vast as my love for you. 🌌💖",
+    "Every beat of my heart whispers your name. 💗",
+    "You're my forever star in this sky of life. ✨",
+    "Holding you feels like home. 🏡💞",
+    "In your arms, time pauses. ⏳❤️",
+    "You're the poetry in my starlit nights. 🌙📜",
+    "We shine brighter together. 💫",
+    "Love like ours moves the universe. 🌠",
+    "You’re the wish I made on every falling star. 💫💋"
+  ];
+
+  function createHearts(count) {
+    for (let i = 0; i < count; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = Math.random() * 100 + 'vh';
+      heart.style.animationDuration = (6 + Math.random() * 6) + 's';
+      heart.addEventListener('click', showMessage);
+      document.body.appendChild(heart);
+    }
+  }
+
+  function showMessage() {
+    const msg = messages[Math.floor(Math.random() * messages.length)];
+    typeText(msg, document.getElementById('popupText'));
+    document.getElementById('popup').classList.add('active');
+    document.getElementById('overlay').classList.add('active');
+  }
+
+  function closePopup() {
+    document.getElementById('popup').classList.remove('active');
+    document.getElementById('overlay').classList.remove('active');
+    document.getElementById('popupText').textContent = "";
+  }
+
+  function typeText(text, element) {
+    element.textContent = "";
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, 35);
+      }
+    }
+    type();
+  }
+
+  createHearts(50);
+</script>
+
+</body>
+</html>
